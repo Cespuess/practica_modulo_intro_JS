@@ -33,13 +33,27 @@ const datos = [
 function devJS(devs, skill){
     //recibe la lista con los desarrolladores y la habilidad y devuelve una lista con los desarrolladores que cumplan con esa habilidad.
     let developers = devs.filter(dev => dev.habilidades.includes(skill));
-    return developers
+    return developers;
 }
 
 let desarrolladoresJavascript = devJS(datos, "JavaScript");
-console.log(desarrolladoresJavascript)
+console.log(desarrolladoresJavascript);
 
 // Listado proyecto de los Devs--------------------------------------------
+// con .map()
+let projectsMap = [];
+for (let i = 0; i < datos.length; i++) {
+    let projectName = datos[i].proyectos.map(pro =>pro.nombre)
+        projectsMap = projectsMap.concat(projectName)       
+}
+console.log(projectsMap)
 
-
-
+// con for
+const projects = []
+for (let i = 0; i < datos.length; i++) {
+    for (let j = 0; j < datos[i].proyectos.length; j++) {
+        const projectName = datos[i].proyectos[j].nombre;
+        projects.push(projectName)        
+    }
+}
+console.log(projects)
