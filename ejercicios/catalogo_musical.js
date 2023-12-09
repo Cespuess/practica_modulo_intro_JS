@@ -52,7 +52,7 @@ function askDuration() {
         alert(`Tiene que ser en minutos.`)
         time = askDuration();
     }
-    return time;
+    return parseInt(time);
 }
 
 function listarCanciones(playlist) {
@@ -73,8 +73,13 @@ function calcularPromedioDuracion(playlist) {
         console.log("Tu catálogo de canciones está vacío.")
     } else {
         let duracionTotal = playlist.reduce((accum, song) => accum + song.duracion,0);
-        let average = floatToMinutes(duracionTotal / playlist.length)
-        console.log(`El promedio de duración de las canciones del catálogo es de ${average[0]}:${average[1]} minutos.`)
+        let average = duracionTotal / playlist.length
+        if (average % 1 !== 0){
+            average = floatToMinutes(average)        
+            console.log(`El promedio de duración de las canciones del catálogo es de ${average[0]}:${average[1]} minutos.`)
+        } else {
+            console.log(`El promedio de duración de las canciones del catálogo es de ${average} minutos.`)
+        }
     }
 };
 
@@ -132,7 +137,7 @@ const listaPrueba = [{
 
 // Inicio programa -------------------------------------
 
-let catalogo = listaPrueba;
+let catalogo = [];
 
     while(true){
         let misOpciones = crearCatalogo();
