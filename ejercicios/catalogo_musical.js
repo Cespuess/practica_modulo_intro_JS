@@ -1,4 +1,17 @@
 // Funciones ----------------------------------
+function askOption(){
+    option = prompt(`Que deseas hacer:\n
+                        1) Agregar canción\n
+                        2) Listar las canciones\n
+                        3) Buscar por género\n
+                        4) Calcular el promedio de duración\n
+                        5) Salir`);
+
+    while (!options.includes(parseInt(option))){
+            option = prompt("Tiene que ser un número del 1 al 5: ");
+    }
+    return option
+}
 
 function Song(name, genre, duration) {
     this.nombre = name;
@@ -6,13 +19,31 @@ function Song(name, genre, duration) {
     this.duracion = duration;
 };
 
-
 function agregarCancion(playlist) {
     let name = prompt("Nombre de la canción: ");
-    let genre = prompt("Género de la canción: ").toLowerCase();
+    let genre = askGenre();            
     let duracion = parseFloat(prompt("Duración de la canción en minutos: "));
     
     playlist.push(new Song(name, genre, duracion))
+};
+
+function askGenre() {
+    genre = prompt(`Género de la canción:\n
+                - ${generosCanciones[0]}\n
+                - ${generosCanciones[1]}\n
+                - ${generosCanciones[2]}\n
+                - ${generosCanciones[3]}\n
+                - ${generosCanciones[4]}`)
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
+
+    while (!generosCanciones.includes(genre)) {
+        alert(`Tiene que ser un género de la lista`);
+        genre = askGenre();
+    }
+
+    return genre
 }
 
 function listarCanciones(playlist) {
@@ -21,7 +52,7 @@ function listarCanciones(playlist) {
     } else {
         playlist.forEach(song => console.log(`Nombre: ${song.nombre}\t Género: ${song.genero}\t Duración: ${song.duracion} minutos`));
     }
-}
+};
 
 function buscarPorGenero(playlist, tipo) {
     if (playlist.length === 0) {
@@ -30,7 +61,7 @@ function buscarPorGenero(playlist, tipo) {
         let selectedSongs = playlist.filter(song => song.genero === tipo);
         selectedSongs.forEach(song => console.log(`Nombre: ${song.nombre}\t Género: ${song.genero}\t Duración: ${song.duracion} minutos`));
     }
-}
+};
 
 function calcularPromedioDuracion(playlist) {
     if (playlist.length === 0) {
@@ -40,7 +71,7 @@ function calcularPromedioDuracion(playlist) {
         let average = floatToMinutes(duracionTotal / playlist.length)
         console.log(`El promedio de duración de las canciones del catálogo es de ${average[0]}:${average[1]} minutos.`)
     }
-}
+};
 
 function floatToMinutes(float) {
     let minutes = Math.floor(float);
@@ -49,7 +80,7 @@ function floatToMinutes(float) {
     if (seconds < 10) "0" + seconds;
 
     return [minutes, seconds];
-}
+};
 
 function crearCatalogo() {
     return {
@@ -64,7 +95,7 @@ function crearCatalogo() {
 
 const options = [1,2,3,4,5];
 
-const generosCanciones = ["rock", "pop", "reggeaton", "clásica", "techno"]
+const generosCanciones = ["rock", "pop", "reggeaton", "clasica", "techno"]
 
 const listaPrueba = [{
     "nombre": "waka",
@@ -94,21 +125,12 @@ const listaPrueba = [{
 
 // Inicio programa -------------------------------------
 
-let catalogo = [];
+let catalogo = listaPrueba;
 
     while(true){
         let misOpciones = crearCatalogo();
         console.log(catalogo);
-        opcion = prompt(`Que deseas hacer:\n
-                        1) Agregar canción\n
-                        2) Listar las canciones\n
-                        3) Buscar por género\n
-                        4) Calcular el promedio de duración\n
-                        5) Salir`);
-
-        while (!options.includes(parseInt(opcion))){
-            opcion = prompt("Tiene que ser un número del 1 al 5: ");
-        }
+        opcion = askOption();
 
         if (opcion ==="1") {
             misOpciones.agregarCancion(catalogo);
@@ -130,8 +152,6 @@ let catalogo = [];
         } else {
             break;
         }
-        console.log(catalogo);
-
 }
 
 
