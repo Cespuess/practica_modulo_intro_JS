@@ -64,12 +64,8 @@ function listarCanciones(playlist) {
 };
 
 function buscarPorGenero(playlist, tipo) {
-    if (playlist.length === 0) {
-        console.log("Tu catálogo está vacío.");
-    } else {
-        let selectedSongs = playlist.filter(song => song.genero === tipo);
-        selectedSongs.forEach(justifiedMsg);
-    }
+    let selectedSongs = playlist.filter(song => song.genero === tipo);
+    (selectedSongs.length === 0 ? console.log("No hay canciones de este género en tu catálogo") : selectedSongs.forEach(justifiedMsg));
 };
 
 function calcularPromedioDuracion(playlist) {
@@ -136,7 +132,7 @@ const listaPrueba = [{
 
 // Inicio programa -------------------------------------
 
-let catalogo = [];
+let catalogo = listaPrueba;
 
     while(true){
         let misOpciones = crearCatalogo();
@@ -151,15 +147,7 @@ let catalogo = [];
             if (catalogo.length === 0){
                 console.log("Tu playlist está vacía");
             } else {
-                let genero = prompt(`Que género quieres buscar:\n
-                                    - ${generosCanciones[0]}\n
-                                    - ${generosCanciones[1]}\n
-                                    - ${generosCanciones[2]}\n
-                                    - ${generosCanciones[3]}\n
-                                    - ${generosCanciones[4]}`);
-                while (!generosCanciones.includes(genero)) {
-                    genero = prompt(`Tiene que ser un género de la lista:`)
-                }
+                let genero = askGenre();
                 misOpciones.buscarPorGenero(catalogo, genero);
             }
         } else if (opcion === "4") {
