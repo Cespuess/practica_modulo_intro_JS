@@ -136,7 +136,7 @@ const listaPrueba = [{
 
 // Inicio programa -------------------------------------
 
-let catalogo = listaPrueba;
+let catalogo = [];
 
     while(true){
         let misOpciones = crearCatalogo();
@@ -148,16 +148,20 @@ let catalogo = listaPrueba;
         } else if (opcion === "2") {
             misOpciones.listarCanciones(catalogo);
         } else if (opcion === "3") {
-            let genero = prompt(`Que género quieres buscar:\n
-                                - ${generosCanciones[0]}\n
-                                - ${generosCanciones[1]}\n
-                                - ${generosCanciones[2]}\n
-                                - ${generosCanciones[3]}\n
-                                - ${generosCanciones[4]}`);
-            while (!generosCanciones.includes(genero)) {
-                genero = prompt(`Tiene que ser un género de la lista:`)
+            if (catalogo.length === 0){
+                console.log("Tu playlist está vacía");
+            } else {
+                let genero = prompt(`Que género quieres buscar:\n
+                                    - ${generosCanciones[0]}\n
+                                    - ${generosCanciones[1]}\n
+                                    - ${generosCanciones[2]}\n
+                                    - ${generosCanciones[3]}\n
+                                    - ${generosCanciones[4]}`);
+                while (!generosCanciones.includes(genero)) {
+                    genero = prompt(`Tiene que ser un género de la lista:`)
+                }
+                misOpciones.buscarPorGenero(catalogo, genero);
             }
-            misOpciones.buscarPorGenero(catalogo, genero);
         } else if (opcion === "4") {
             misOpciones.calcularPromedioDuracion(catalogo);
         } else {
