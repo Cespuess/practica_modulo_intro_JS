@@ -59,7 +59,7 @@ function listarCanciones(playlist) {
     if (playlist.length === 0){
         console.log("No hay canciones en tu catálogo.")
     } else {
-        playlist.forEach(song => console.log(`Nombre: ${song.nombre}\t Género: ${song.genero}\t Duración: ${song.duracion} minutos`));
+        playlist.forEach(justifiedMsg);
     }
 };
 
@@ -68,7 +68,7 @@ function buscarPorGenero(playlist, tipo) {
         console.log("Tu catálogo está vacío.");
     } else {
         let selectedSongs = playlist.filter(song => song.genero === tipo);
-        selectedSongs.forEach(song => console.log(`Nombre: ${song.nombre}\t Género: ${song.genero}\t Duración: ${song.duracion} minutos`));
+        selectedSongs.forEach(justifiedMsg);
     }
 };
 
@@ -104,7 +104,9 @@ function crearCatalogo() {
 
 const options = [1,2,3,4,5];
 
-const generosCanciones = ["rock", "pop", "reggeaton", "clasica", "techno"]
+const generosCanciones = ["rock", "pop", "reggeaton", "clasica", "techno"];
+
+const justifiedMsg = song => console.log(`Nombre: ${song.nombre.padEnd(20)}\t Género: ${song.genero.padEnd(15)}\t Duración: ${String(song.duracion).padStart(2)} minutos`);
 
 const listaPrueba = [{
     "nombre": "waka",
@@ -130,7 +132,7 @@ const listaPrueba = [{
     "nombre": "la raja de tu falda",
     "genero": "pop",
     "duracion": 7
-}]
+}];
 
 // Inicio programa -------------------------------------
 
