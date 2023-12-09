@@ -1,16 +1,16 @@
 // Funciones ----------------------------------
 function askOption(){
-    option = prompt(`Que deseas hacer:\n
+    let choice = prompt(`Que deseas hacer:\n
                         1) Agregar canción\n
                         2) Listar las canciones\n
                         3) Buscar por género\n
                         4) Calcular el promedio de duración\n
                         5) Salir`);
 
-    while (!options.includes(parseInt(option))){
-            option = prompt("Tiene que ser un número del 1 al 5: ");
+    while (!options.includes(parseInt(choice))){
+            choice = prompt("Tiene que ser un número del 1 al 5: ");
     }
-    return option
+    return choice
 }
 
 function Song(name, genre, duration) {
@@ -22,13 +22,13 @@ function Song(name, genre, duration) {
 function agregarCancion(playlist) {
     let name = prompt("Nombre de la canción: ");
     let genre = askGenre();            
-    let duracion = parseFloat(prompt("Duración de la canción en minutos: "));
+    let duracion = askDuration();
     
     playlist.push(new Song(name, genre, duracion))
 };
 
 function askGenre() {
-    genre = prompt(`Género de la canción:\n
+    let type = prompt(`Género de la canción:\n
                 - ${generosCanciones[0]}\n
                 - ${generosCanciones[1]}\n
                 - ${generosCanciones[2]}\n
@@ -38,12 +38,21 @@ function askGenre() {
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "");
 
-    while (!generosCanciones.includes(genre)) {
+    while (!generosCanciones.includes(type)) {
         alert(`Tiene que ser un género de la lista`);
-        genre = askGenre();
+        type = askGenre();
     }
 
-    return genre
+    return type
+}
+
+function askDuration() {
+    let time = prompt("Duración de la canción en minutos: ");
+    while (isNaN(parseInt(time)) || time % 1 !== 0) {
+        alert(`Tiene que ser en minutos.`)
+        time = askDuration();
+    }
+    return time;
 }
 
 function listarCanciones(playlist) {
