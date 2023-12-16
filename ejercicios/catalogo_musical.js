@@ -19,14 +19,6 @@ function Song(name, genre, duration) {
     this.duracion = duration;
 };
 
-function agregarCancion(playlist) {
-    let name = prompt("Nombre de la canción: ");
-    let genre = askGenre();            
-    let duracion = askDuration();
-    
-    playlist.push(new Song(name, genre, duracion))
-};
-
 function askGenre() {
     let type = prompt(`Género de la canción:\n
                 - ${generosCanciones[0]}\n
@@ -55,35 +47,8 @@ function askDuration() {
     return parseInt(time);
 }
 
-function listarCanciones(playlist) {
-    if (playlist.length === 0){
-        console.log("No hay canciones en tu catálogo.")
-    } else {
-        playlist.forEach(justifiedMsg);
-    }
-};
 
-function buscarPorGenero(playlist, tipo) {
-    let selectedSongs = playlist.filter(song => song.genero === tipo);
-    (selectedSongs.length === 0 ? console.log("No hay canciones de este género en tu catálogo") : selectedSongs.forEach(justifiedMsg));
-};
-
-function calcularPromedioDuracion(playlist) {
-    if (playlist.length === 0) {
-        console.log("Tu catálogo de canciones está vacío.")
-    } else {
-        let duracionTotal = playlist.reduce((accum, song) => accum + song.duracion,0);
-        let average = duracionTotal / playlist.length
-        if (average % 1 !== 0){
-            average = floatToMinutes(average)        
-            console.log(`El promedio de duración de las canciones del catálogo es de ${average[0]}:${average[1]} minutos.`)
-        } else {
-            console.log(`El promedio de duración de las canciones del catálogo es de ${average} minutos.`)
-        }
-    }
-};
-
-function floatToMinutes(float) {
+function floatToMinutes(float) { //convertimos el minutos decimal en minutos:segundos
     let minutes = Math.floor(float);
     let seconds = Math.round((float % 1) * 60);
 
@@ -94,10 +59,38 @@ function floatToMinutes(float) {
 
 function crearCatalogo() {
     return {
-        agregarCancion: agregarCancion,
-        listarCanciones: listarCanciones,
-        buscarPorGenero: buscarPorGenero,
-        calcularPromedioDuracion: calcularPromedioDuracion
+        agregarCancion: (playlist) => {
+            let name = prompt("Nombre de la canción: ");
+            let genre = askGenre();            
+            let duracion = askDuration();
+            
+            playlist.push(new Song(name, genre, duracion))  
+        },
+        listarCanciones: (playlist) => {
+            if (playlist.length === 0){
+                console.log("No hay canciones en tu catálogo.")
+            } else {
+                playlist.forEach(justifiedMsg);
+            }
+        },
+        buscarPorGenero: (playlist, tipo) => {
+            let selectedSongs = playlist.filter(song => song.genero === tipo);
+            (selectedSongs.length === 0 ? console.log("No hay canciones de este género en tu catálogo") : selectedSongs.forEach(justifiedMsg));
+        },
+        calcularPromedioDuracion: (playlist) => {
+            if (playlist.length === 0) {
+                console.log("Tu catálogo de canciones está vacío.")
+            } else {
+                let duracionTotal = playlist.reduce((accum, song) => accum + song.duracion,0);
+                let average = duracionTotal / playlist.length
+                if (average % 1 !== 0){
+                    average = floatToMinutes(average)        
+                    console.log(`El promedio de duración de las canciones del catálogo es de ${average[0]}:${average[1]} minutos.`)
+                } else {
+                    console.log(`El promedio de duración de las canciones del catálogo es de ${average} minutos.`)
+                }
+            }
+        }
     };
 };
 
@@ -141,7 +134,6 @@ let catalogo = [];
 
     while(true){
         let misOpciones = crearCatalogo();
-        console.log(catalogo);
         opcion = askOption();
 
         if (opcion ==="1") {
