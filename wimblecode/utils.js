@@ -18,21 +18,19 @@ function createMatch(player1, player2) {
         }
     ];
 
+    this.points = [0, 15, 30, 40]
     this.deuce = false;
     this.advantage;
 
     this.pointWonBy = (idPlayer) => {
         if (!this.deuce) {
-            if (this.players[idPlayer - 1].currentRoundScore === 30) {
-                this.players[idPlayer - 1].currentRoundScore += 10;
-            } else {
-                this.players[idPlayer -1].currentRoundScore += 15;
-            }
-            if (this.players[idPlayer - 1].currentRoundScore > 40) { // cuando un jugador ha ganado la ronda sin llegar a deuce, ponemos el currentRoundScore a cero y le sumamos la ronda al ganador
+            this.players[idPlayer - 1].currentRoundScore += 1;
+
+            if (this.players[idPlayer - 1].currentRoundScore === 4) { // cuando un jugador ha ganado la ronda sin llegar a deuce, ponemos el currentRoundScore a cero y le sumamos la ronda al ganador
                 this.players[idPlayer - 1].roundScore +=1;
                 this.players.forEach((player => player.currentRoundScore = 0));
             }
-            else if (this.players.reduce((acum, player) => acum + player.currentRoundScore, 0) === 80) { // comprobamos que los dos están a 40 para cambiar a deuce
+            else if (this.players[0].currentRoundScore === 3 && this.players[1].currentRoundScore === 3) { // comprobamos que los dos están a 40 para cambiar a deuce
                 this.deuce = true
             }
         } else { // si la ronda está en deuce
@@ -74,6 +72,17 @@ game.pointWonBy(2);
 game.pointWonBy(2);
 game.pointWonBy(2);
 game.pointWonBy(1);
+game.pointWonBy(1);
+game.pointWonBy(1);
+game.pointWonBy(1);
+game.pointWonBy(2);
+game.pointWonBy(2);
+game.pointWonBy(2);
+
+
+
+
+
 
 
 
