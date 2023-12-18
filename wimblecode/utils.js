@@ -3,14 +3,14 @@ function createMatch(player1, player2) {
         {
             id: 1,
             name: player1,
-            currentRoundScore: 2,
+            currentRoundScore: 0,
             roundScore: 0,
             gameScore: 0,
         },
         {
             id: 2,
             name: player2,
-            currentRoundScore: 1,
+            currentRoundScore: 0,
             roundScore: 0,
             gameScore: 0,
         }
@@ -19,7 +19,7 @@ function createMatch(player1, player2) {
     this.points = [0, 15, 30, 40]
     this.deuce = false;
     this.advantage;
-    this.getWinner;
+    this.winner;
 
     this.pointWonBy = idPlayer => {
         if (!this.deuce) {
@@ -55,7 +55,7 @@ function createMatch(player1, player2) {
         }
         // si un jugador ha ganado dos games se proclama campeón
         if (this.players[idPlayer - 1].gameScore === 2) {
-            this.winner = idPlayer - 1;
+            this.winner = idPlayer;
         }
 
     };
@@ -64,25 +64,19 @@ function createMatch(player1, player2) {
         else if (this.deuce) return `Advantage ${this.players[this.advantage].name}`;
         else return `${this.players[0].name} ${this.points[this.players[0].currentRoundScore]} - ${this.points[this.players[1].currentRoundScore]} ${this.players[1].name}`
     };
-    this.getRoundScore = () => {
-        return `${this.players[0].name} ${this.players[0].roundScore} - ${this.players[1].name} ${this.players[1].roundScore}`;
-    }
-    this.getMatchScore = getMatchScore();
-    this.getWinner = getWinner();
-
+    this.getRoundScore = () => `${this.players[0].name} ${this.players[0].roundScore} - ${this.players[1].name} ${this.players[1].roundScore}`; // devuelve el resultado de las rondas ganadas
+    this.getMatchScore = () => `${this.players[0].name} ${this.players[0].gameScore} - ${this.players[1].name} ${this.players[1].gameScore}`; // devuelve el resultado de los games ganados
+    this.getWinner = () => (!this.winner ? null : `${this.players[this.winner - 1].name}`); // devuelve el nombre del ganador, o null si aún no hay vencedor
+    
 }
 
-
-const getMatchScore = () => {};
-
-const getWinner = () => {};
 
 // pruebas ----------------------------------------------------------------------------------------
 const game = new createMatch("Alberto C", "David J");
 console.log(game.players[0]);
 console.log(game.players[1]);
 
-game.pointWonBy(1);
+game.pointWonBy(2);
 game.pointWonBy(1);
 
 
@@ -95,6 +89,8 @@ console.log(game.winner);
 
 console.log(game.getCurrentRoundScore());
 console.log(game.getRoundScore());
+console.log(game.getMatchScore());
+console.log(game.getWinner());
 
 
 
