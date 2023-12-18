@@ -10,7 +10,7 @@ function createMatch(player1, player2) {
         {
             id: 2,
             name: player2,
-            currentRoundScore: 3,
+            currentRoundScore: 1,
             roundScore: 0,
             gameScore: 0,
         }
@@ -64,16 +64,14 @@ function createMatch(player1, player2) {
         else if (this.deuce) return `Advantage ${this.players[this.advantage].name}`;
         else return `${this.players[0].name} ${this.points[this.players[0].currentRoundScore]} - ${this.points[this.players[1].currentRoundScore]} ${this.players[1].name}`
     };
-    this.getRoundScore = getRoundScore();
+    this.getRoundScore = () => {
+        return `${this.players[0].name} ${this.players[0].roundScore} - ${this.players[1].name} ${this.players[1].roundScore}`;
+    }
     this.getMatchScore = getMatchScore();
     this.getWinner = getWinner();
 
 }
 
-
-
-
-const getRoundScore = () => {};
 
 const getMatchScore = () => {};
 
@@ -85,13 +83,7 @@ console.log(game.players[0]);
 console.log(game.players[1]);
 
 game.pointWonBy(1);
-
-
-
-
-
-
-
+game.pointWonBy(1);
 
 
 
@@ -101,7 +93,8 @@ console.log(game.deuce);
 console.log(game.advantage);
 console.log(game.winner);
 
-console.log(game.getCurrentRoundScore())
+console.log(game.getCurrentRoundScore());
+console.log(game.getRoundScore());
 
 
 
